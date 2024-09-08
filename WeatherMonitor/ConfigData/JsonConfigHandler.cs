@@ -1,14 +1,22 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 namespace WeatherMonitor.ConfigData;
 #nullable disable
 public abstract class JsonConfigHandler
 {
-    private const string FilePath = @"C:\Users\User\Desktop\FTS\WeatherService\WeatherMonitor\WeatherMonitor\ConfigData\data.json";
+    private const string FilePath = @"ConfigData\data.json";
 
     public static void LoadConfiguration()
     {
         var jsonString = File.ReadAllText(FilePath);
-        var configurationData = JsonConvert.DeserializeObject<ConfigurationData>(jsonString);
+        var settings = new JsonSerializerSettings
+        {
+            ContractResolver = new DefaultContractResolver()
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            }
+        };
+        var configurationData = JsonConvert.DeserializeObject<ConfigurationData>(jsonString, settings);
         SetUpConfigurationInstance(configurationData , ConfigurationData.ConfigurationDataInstance);
     }
 

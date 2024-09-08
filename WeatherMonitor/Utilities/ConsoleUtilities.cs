@@ -25,7 +25,7 @@ public abstract class ConsoleUtilities
 
     private static void ValidateInput(string input)
     {
-        if (input == string.Empty)
+        if (string.IsNullOrEmpty(input))
         {
             Print.Log("Please Enter valid input");
             return;

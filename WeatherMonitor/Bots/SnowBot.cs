@@ -5,7 +5,6 @@ namespace WeatherMonitor.Bots;
 
 public class SnowBot : Bot
 {
-    [JsonProperty("temperatureThreshold")]
     public int TemperatureThreshold { get; set; }
 
     protected override bool IsActivated(WeatherData weatherData)

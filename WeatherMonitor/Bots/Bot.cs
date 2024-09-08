@@ -6,10 +6,7 @@ namespace WeatherMonitor.Bots;
 
 public abstract class Bot
 {
-    [JsonProperty("enabled")]
     public bool Enabled { get; set; }
-
-    [JsonProperty("message")]
     public string Message { get; set; } = string.Empty;
 
     public void Update(WeatherData weatherData)
