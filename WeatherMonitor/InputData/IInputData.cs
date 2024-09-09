@@ -3,6 +3,6 @@ namespace WeatherMonitor.InputData;
 
 public interface IInputData
 {
-    WeatherData? GetDate(string input);
+    WeatherData? ParseDate(string input);
     bool IsMatch(string input);
 }

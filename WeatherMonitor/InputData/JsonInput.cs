@@ -5,7 +5,7 @@ namespace WeatherMonitor.InputData;
 
 public class JsonInput : IInputData
 {
-    public WeatherData? GetDate(string input)
+    public WeatherData? ParseDate(string input)
     {
         WeatherData? weatherData = null;
         try

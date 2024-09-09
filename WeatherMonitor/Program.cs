@@ -1,5 +1,5 @@
 ﻿using WeatherMonitor.Utilities;
 
-ConsoleUtilities.StartApplication();
+ApplicationStartupValidator.StartApplication();
 Console.ReadLine();
 

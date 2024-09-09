@@ -1,5 +1,4 @@
-﻿using WeatherMonitor.ConfigData;
-using WeatherMonitor.Bots;
+﻿using WeatherMonitor.Bots;
 namespace WeatherMonitor.WeatherManagement;
 
 public abstract class WeatherBase

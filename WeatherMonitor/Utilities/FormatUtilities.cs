@@ -1,6 +1,6 @@
 ﻿using WeatherMonitor.InputData;
 using WeatherMonitor.InputFactories;
-using WeatherMonitor.PrintConfig;
+using WeatherMonitor.WeatherManagement;
 namespace WeatherMonitor.Utilities;
 
 public static class FormatUtilities
@@ -12,26 +12,15 @@ public static class FormatUtilities
         new XmlFactory().GetObject()
     ];
 
-    public static IInputData? GetInputFormat(string input)
+    private static IInputData? GetInputFormat(string input)
     {
         var inputFormat = InputFormats.FirstOrDefault(format => format.IsMatch(input));
-        return inputFormat ;
+        return inputFormat;
     }
 
-    private static void GetDateFromInputFormat(string input, IInputData format)
+    public static WeatherData? GetDateFromInputFormat(string input)
     {
-        var parsedWeatherInput = format.GetDate(input);
-        if (parsedWeatherInput is not null)
-            ApplicationSetUp.SetUpApplication(parsedWeatherInput);
-    }
-
-    public static void ValidateFormat(string input, IInputData? inputFormat)
-    {
-        if (inputFormat is not null)
-        {
-            GetDateFromInputFormat(input, inputFormat);
-            return;
-        }
-        Print.Log("Invalid Format!");
+        var inputFormat = GetInputFormat(input);
+        return inputFormat?.ParseDate(input);
     }
 }

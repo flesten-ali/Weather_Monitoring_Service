@@ -1,7 +1,7 @@
 ﻿using WeatherMonitor.WeatherManagement;
 namespace WeatherMonitor.WeathersFactory;
 
-public abstract class WeatherFactory
+public class WeatherFactory
 {
     public static Weather CreateWeather()
     {

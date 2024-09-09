@@ -3,9 +3,8 @@ using WeatherMonitor.WeatherManagement;
 using WeatherMonitor.WeathersFactory;
 namespace WeatherMonitor.Utilities;
 
-public abstract class ApplicationSetUp
+public static class ApplicationSetUp
 {
-
     public static void SetUpApplication(WeatherData weatherData)
     {
         JsonConfigHandler.LoadConfiguration();
