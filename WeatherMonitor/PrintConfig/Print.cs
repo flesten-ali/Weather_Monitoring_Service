@@ -1,8 +1,8 @@
 ﻿ namespace WeatherMonitor.PrintConfig;
 
-public static class Print
+public class Print : IPrint
 {
-    public static void Log(string message)
+    public void Log(string message)
     {
         Console.WriteLine(message);
     }

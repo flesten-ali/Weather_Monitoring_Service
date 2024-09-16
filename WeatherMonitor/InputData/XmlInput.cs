@@ -5,7 +5,15 @@ namespace WeatherMonitor.InputData;
 
 public class XmlInput : IInputData
 {
-    public WeatherData? ParseDate(string input)
+    private readonly IPrint _printer;
+
+    public XmlInput(IPrint print)
+    {
+        _printer = print;
+
+    }
+    
+    public WeatherData? ParseData(string input)
     {
         WeatherData? weatherData = null;
         try
@@ -14,9 +22,9 @@ public class XmlInput : IInputData
             using var reader = new StringReader(input);
             weatherData = (WeatherData)serializer.Deserialize(reader)!;
         }
-        catch   
+        catch
         {
-            Print.Log("Invalid Xml format");
+            _printer.Log("Invalid Xml format");
         }
         return weatherData;
     }

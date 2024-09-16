@@ -2,13 +2,19 @@
 using Newtonsoft.Json.Serialization;
 namespace WeatherMonitor.ConfigData;
 #nullable disable
-public abstract class JsonConfigHandler
+public class JsonConfigHandler : IJsonConfigHandler
 {
     private const string FilePath = @"ConfigData\data.json";
+    private readonly IFileSystem _fileSystem;
 
-    public static void LoadConfiguration()
+    public JsonConfigHandler(IFileSystem fileSystem)
     {
-        var jsonString = File.ReadAllText(FilePath);
+        _fileSystem = fileSystem;
+    }
+
+    public void LoadConfiguration()
+    {
+        var jsonString = _fileSystem.ReadAllText(FilePath);
         var settings = new JsonSerializerSettings
         {
             ContractResolver = new DefaultContractResolver()
@@ -17,7 +23,7 @@ public abstract class JsonConfigHandler
             }
         };
         var configurationData = JsonConvert.DeserializeObject<ConfigurationData>(jsonString, settings);
-        SetUpConfigurationInstance(configurationData , ConfigurationData.ConfigurationDataInstance);
+        SetUpConfigurationInstance(configurationData, ConfigurationData.ConfigurationDataInstance);
     }
 
     private static void SetUpConfigurationInstance(ConfigurationData configurationData, ConfigurationData configurationInstance)
