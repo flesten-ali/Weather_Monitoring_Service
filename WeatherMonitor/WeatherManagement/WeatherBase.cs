@@ -3,20 +3,25 @@ namespace WeatherMonitor.WeatherManagement;
 
 public abstract class WeatherBase
 {
-    private readonly List<Bot> _bots = [];
+    public readonly List<Bot> Bots = [];
+
     public void AddBot(Bot bot)
     {
-        _bots.Add(bot);
+        Bots.Add(bot);
     }
+
     public void RemoveBot(Bot bot)
     {
-        _bots.Remove(bot);
+        Bots.Remove(bot);
     }
+
     protected void NotifyBots(WeatherData weatherData)
     {
-        foreach (var bot in _bots)
+        foreach (var bot in Bots)
         {
             bot.Update(weatherData);
         }
     }
+
+    public abstract void UpdateWeatherState(WeatherData weatherData);
 }
