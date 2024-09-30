@@ -22,9 +22,9 @@ public class FormatUtilitiesShould
         var fixture = new Fixture();
         _dummyWeatherData = fixture.Create<WeatherData>();
 
-        _jsonInput.Setup(x => x.IsMatch(It.IsAny<string>())).Returns(true);
+        _jsonInput.Setup(x => x.IsMatch("Json Format")).Returns(true);
         _jsonInput.Setup(x => x.ParseData(It.IsAny<string>())).Returns(_dummyWeatherData);
-        _xmlInput.Setup(x => x.IsMatch(It.IsAny<string>())).Returns(false);
+        _xmlInput.Setup(x => x.IsMatch("Not Xml Format")).Returns(false);
 
         _formater = new Mock<FormatUtilities>(new List<IInputData> { _jsonInput.Object, _xmlInput.Object });
     }
@@ -32,9 +32,9 @@ public class FormatUtilitiesShould
     [Fact]
     public void ReturnWeatherData_When_GetDateFromInputFormatCalledAndInputIsMatch()
     {
-        var weatherData = _formater.Object.GetDateFromInputFormat(It.IsAny<string>());
+        var weatherData = _formater.Object.GetDateFromInputFormat("Json Format");
 
-        _jsonInput.Verify(x => x.IsMatch(It.IsAny<string>()), Times.Once);
+        _jsonInput.Verify(x => x.IsMatch("Json Format"), Times.Once);
         weatherData.Should().NotBeNull();
         weatherData!.Humidity.Should().Be(_dummyWeatherData.Humidity);
         weatherData.Location.Should().Be(_dummyWeatherData.Location);
@@ -44,12 +44,12 @@ public class FormatUtilitiesShould
     [Fact]
     public void ReturnNull_When_InputDoesNotMatch()
     {
-        _jsonInput.Setup(x => x.IsMatch(It.IsAny<string>())).Returns(false);
+        _jsonInput.Setup(x => x.IsMatch("Not Json Format and Not Xml Format")).Returns(false);
 
-        var weatherData = _formater.Object.GetDateFromInputFormat(It.IsAny<string>());
+        var weatherData = _formater.Object.GetDateFromInputFormat("Not Json Format and Not Xml Format");
 
-        _jsonInput.Verify(x => x.IsMatch(It.IsAny<string>()), Times.Once);
-        _xmlInput.Verify(x => x.IsMatch(It.IsAny<string>()), Times.Once);
+        _jsonInput.Verify(x => x.IsMatch("Not Json Format and Not Xml Format"), Times.Once);
+        _xmlInput.Verify(x => x.IsMatch("Not Json Format and Not Xml Format"), Times.Once);
         weatherData.Should().BeNull();
     }
 }

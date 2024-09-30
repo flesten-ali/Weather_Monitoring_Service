@@ -19,7 +19,7 @@ public class JsonInputShould : InputBaseTest
     [Fact]
     public override void ReturnWeatherData_When_InputStringIsValid()
     {
-         var input = """
+        var input = """
                      {
                        "Location": "City Name",
                        "Temperature": 23.0,
@@ -36,20 +36,11 @@ public class JsonInputShould : InputBaseTest
     }
 
     [Fact]
-    public override void ReturnNull_When_InputStringIsInValid()
+    public override void ThrowException_When_StringIsInvalid()
     {
-        var res = _jsonInput.ParseData("");
+        Action action = () => _jsonInput.ParseData("");
 
-        res.Should().BeNull();
-    }
-
-    [Fact]
-    public override void PrintErrorMsg_When_StringIsInvalid()
-    {
-        var res = _jsonInput.ParseData("");
-
-        res.Should().BeNull();
-        _printer.Verify(x => x.Log("Invalid Json Format"), Times.Once);
+        action.Should().Throw<FormatException>().WithMessage("Invalid Json Format");
     }
 
     [Theory]

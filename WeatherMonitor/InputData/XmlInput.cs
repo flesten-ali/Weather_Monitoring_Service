@@ -22,9 +22,9 @@ public class XmlInput : IInputData
             using var reader = new StringReader(input);
             weatherData = (WeatherData)serializer.Deserialize(reader)!;
         }
-        catch
+        catch 
         {
-            _printer.Log("Invalid Xml format");
+            throw new FormatException("Invalid Xml format");
         }
         return weatherData;
     }

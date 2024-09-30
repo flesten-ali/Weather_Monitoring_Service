@@ -3,6 +3,5 @@
 public abstract class InputBaseTest
 {
     public abstract void ReturnWeatherData_When_InputStringIsValid();
-    public abstract void ReturnNull_When_InputStringIsInValid();
-    public abstract void PrintErrorMsg_When_StringIsInvalid();
+    public abstract void ThrowException_When_StringIsInvalid();
 }

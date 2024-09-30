@@ -19,8 +19,8 @@ public class WeatherShould
         fixture.Customize(new AutoMoqCustomization());
         _weatherData = fixture.Create<WeatherData>();
     }
-    [Fact]
 
+    [Fact]
     public void CallUpdateOnAllBots()
     {
         var printer = new Mock<IPrint>();

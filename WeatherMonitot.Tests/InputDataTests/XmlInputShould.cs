@@ -36,20 +36,11 @@ public class XmlInputShould : InputBaseTest
     }
 
     [Fact]
-    public override void ReturnNull_When_InputStringIsInValid()
+    public override void ThrowException_When_StringIsInvalid()
     {
-        var res = _xmlInput.ParseData("");
+        Action action = () => _xmlInput.ParseData("");
 
-        res.Should().BeNull();
-    }
-
-    [Fact]
-    public override void PrintErrorMsg_When_StringIsInvalid()
-    {
-        var res = _xmlInput.ParseData("");
-
-        res.Should().BeNull();
-        _printer.Verify(x => x.Log("Invalid Xml format"), Times.Once);
+        action.Should().Throw<FormatException>().WithMessage("Invalid Xml format");
     }
 
     [Fact]

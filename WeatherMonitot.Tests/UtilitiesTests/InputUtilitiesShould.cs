@@ -27,6 +27,7 @@ public class InputUtilitiesShould
 
         _printer.Verify(x => x.Log("Enter weather data:"), Times.Once);
     }
+
     [Fact]
     public void CallConsole_When_EnterInputIsCalled()
     {
@@ -34,6 +35,7 @@ public class InputUtilitiesShould
 
         _console.Verify(x => x.ReadLine(), Times.Exactly(2));
     }
+
     [Fact]
     public void ReturnUserInput_When_Entered()
     {
@@ -42,6 +44,7 @@ public class InputUtilitiesShould
         res.Should().NotBeNull();
         res.Should().Be("input");
     }
+
     [Fact]
     public void ReturnTrue_When_ValidateNonEmptyString()
     {

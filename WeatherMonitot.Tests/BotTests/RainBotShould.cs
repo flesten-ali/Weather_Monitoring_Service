@@ -11,7 +11,6 @@ public class RainBotShould : BotBaseTests
     private const int HumidityActivateBot = HumidityThreshold + 1;
     private const int HumidityDeactivateBot = HumidityThreshold - 1;
 
-
     public RainBotShould()
     {
         Printer = new Mock<IPrint>();
@@ -62,6 +61,7 @@ public class RainBotShould : BotBaseTests
 
         Printer.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
     }
+
     public override WeatherData CreateWeatherData(int humidity)
     {
         var fixture = new Fixture();

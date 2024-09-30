@@ -20,9 +20,9 @@ public class JsonInput : IInputData
         {
             weatherData = JsonSerializer.Deserialize<WeatherData>(input);
         }
-        catch
+        catch 
         {
-            _printer.Log("Invalid Json Format");
+            throw new FormatException("Invalid Json Format");
         }
         return weatherData;
     }

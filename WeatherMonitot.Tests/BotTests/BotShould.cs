@@ -14,9 +14,10 @@ public class BotShould
 
     public BotShould()
     {
-        _printer = new Mock<IPrint>();
-        _bot = new Mock<Bot>(_printer.Object) { CallBase = true};
         var fixture = new Fixture();
+        _printer = fixture.Freeze<Mock<IPrint>>();
+        _bot = new Mock<Bot>(_printer.Object) { CallBase = true };
+
         _weatherData = fixture.Create<WeatherData>();
     }
 

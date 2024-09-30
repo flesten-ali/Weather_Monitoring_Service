@@ -1,7 +1,6 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using Moq;
-using WeatherMonitor.Bots;
 using WeatherMonitor.ConfigData;
 using WeatherMonitor.Utilities;
 using WeatherMonitor.WeatherManagement;
@@ -21,11 +20,10 @@ public class ApplicationSetUpShould
         _handler = new Mock<IJsonConfigHandler>();
         _appSetUp = new ApplicationSetUp(_handler.Object);
         _weather = new Mock<WeatherBase>();
-
-        _weather.Setup(x => x.UpdateWeatherState(It.IsAny<WeatherData>()));
-
         var fixture = new Fixture();
         _weatherData = fixture.Create<WeatherData>();
+
+        _weather.Setup(x => x.UpdateWeatherState(_weatherData));
     }
 
     [Fact]

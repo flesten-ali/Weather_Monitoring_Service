@@ -54,6 +54,7 @@ public class SnowBotShould : BotBaseTests
 
         Printer.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
     }
+
     [Fact]
     public void NotActivate_When_TemperatureEqualsThreshold()
     {
@@ -61,6 +62,7 @@ public class SnowBotShould : BotBaseTests
 
         Printer.Verify(x => x.Log(It.IsAny<string>()), Times.Never);
     }
+
     public override WeatherData CreateWeatherData(int temperature)
     {
         var fixture = new Fixture();
