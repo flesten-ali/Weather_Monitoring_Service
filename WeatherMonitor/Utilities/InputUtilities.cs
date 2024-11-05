@@ -1,10 +1,18 @@
 ﻿using System.Text;
 using WeatherMonitor.PrintConfig;
+using WeatherMonitor.Utilities.Interfaces;
 namespace WeatherMonitor.Utilities;
 
-public static class InputUtilities
+public class InputUtilities : IInputUtilities
 {
-    public static string Input {
+    public InputUtilities(IPrint print, IConsoleWrapper consoleWrapper)
+    {
+        _printer = print;
+        _console = consoleWrapper;
+    }
+
+    public string Input
+    {
         get
         {
             if (!IsEntered)
@@ -16,24 +24,26 @@ public static class InputUtilities
         private set => _input = value;
     }
 
-    private static string _input = string.Empty;
-    private static bool IsEntered { get; set; }
+    private string _input = string.Empty;
+    private readonly IPrint _printer;
+    private readonly IConsoleWrapper _console;
+    private bool IsEntered { get; set; }
 
-    private static void EnterInput()
+    private void EnterInput()
     {
-        Print.Log("Enter weather data:");
+        _printer.Log("Enter weather data:");
         var input = new StringBuilder();
         string line;
 
-        while ((line = Console.ReadLine()!) != string.Empty)
+        while ((line = _console.ReadLine()!) != string.Empty)
         {
             input.AppendLine(line);
         }
         Input = input.ToString().Trim();
         IsEntered = true;
     }
-    
-    public static bool ValidateInput()
+
+    public bool ValidateInput()
     {
         return !string.IsNullOrEmpty(Input);
     }

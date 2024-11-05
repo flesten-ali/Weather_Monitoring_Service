@@ -1,26 +1,26 @@
 ﻿using WeatherMonitor.InputData;
-using WeatherMonitor.InputFactories;
+using WeatherMonitor.Utilities.Interfaces;
 using WeatherMonitor.WeatherManagement;
 namespace WeatherMonitor.Utilities;
 
-public static class FormatUtilities
+public class FormatUtilities : IFormatUtilities
 {
+    private readonly List<IInputData> _inputFormats;
 
-    private static readonly List<IInputData> InputFormats =
-    [
-        new JsonFactory().GetObject(),
-        new XmlFactory().GetObject()
-    ];
-
-    private static IInputData? GetInputFormat(string input)
+    public FormatUtilities(List<IInputData> inputFormats)
     {
-        var inputFormat = InputFormats.FirstOrDefault(format => format.IsMatch(input));
-        return inputFormat;
+        _inputFormats = inputFormats;
     }
 
-    public static WeatherData? GetDateFromInputFormat(string input)
+    public WeatherData? GetDateFromInputFormat(string input)
     {
         var inputFormat = GetInputFormat(input);
-        return inputFormat?.ParseDate(input);
+        return inputFormat?.ParseData(input);
+    }
+
+    private IInputData? GetInputFormat(string input)
+    {
+        var inputFormat = _inputFormats.FirstOrDefault(format => format.IsMatch(input));
+        return inputFormat;
     }
 }

@@ -1,28 +1,34 @@
 ﻿using WeatherMonitor.ConfigData;
+using WeatherMonitor.Utilities.Interfaces;
 using WeatherMonitor.WeatherManagement;
-using WeatherMonitor.WeathersFactory;
 namespace WeatherMonitor.Utilities;
 
-public static class ApplicationSetUp
+public class ApplicationSetUp : IApplicationSetUp
 {
-    public static void SetUpApplication(WeatherData weatherData)
+    private readonly IJsonConfigHandler _handler;
+
+    public ApplicationSetUp(IJsonConfigHandler handler)
     {
-        JsonConfigHandler.LoadConfiguration();
-        ConfigWeather(weatherData);
+        _handler = handler;
     }
 
-    private static void ConfigWeather(WeatherData weatherData)
+    public void SetUpApplication(WeatherBase weatherBase, WeatherData weatherData)
     {
-        var weather = WeatherFactory.CreateWeather();
-        ConfigBots(weather);
-        weather.UpdateWeatherState(weatherData);
+        _handler.LoadConfiguration();
+        ConfigBots(weatherBase);
+        ConfigWeather(weatherBase, weatherData);
     }
 
-    private static void ConfigBots(Weather weather)
+    private void ConfigBots(WeatherBase weather)
     {
         var configurationData = ConfigurationData.ConfigurationDataInstance;
         weather.AddBot(configurationData.RainBot);
         weather.AddBot(configurationData.SunBot);
         weather.AddBot(configurationData.SnowBot);
+    }
+
+    private void ConfigWeather(WeatherBase weatherBase, WeatherData weatherData)
+    {
+        weatherBase.UpdateWeatherState(weatherData);
     }
 }

@@ -1,27 +1,34 @@
 ﻿using WeatherMonitor.PrintConfig;
+using WeatherMonitor.Utilities.WrapperClasses;
 using WeatherMonitor.WeatherManagement;
 namespace WeatherMonitor.Utilities;
 
 public static class ApplicationStartupValidator
 {
-    public static void StartApplication()
+    public static void StartApplication(WeatherBase weatherBase, IPrint print)
     {
         if (IsValidApp(out var weatherData))
         {
-            ApplicationSetUp.SetUpApplication(weatherData!);
+            SetUpApplicationWrapper.SetUpApplication(weatherBase, weatherData!);
             return;
         }
-        Print.Log("Please Enter Valid Input!");
+        print.Log("Please Enter Valid Input!");
     }
 
     private static bool IsValidApp(out WeatherData? weatherData)
     {
-        if (!InputUtilities.ValidateInput())
-        {
-            weatherData = null;
-            return false;
-        }
-        weatherData = FormatUtilities.GetDateFromInputFormat(InputUtilities.Input);
+        weatherData = null;
+        return IsValidateInput() && IsValidateFormat(out weatherData);
+    }
+
+    private static bool IsValidateFormat(out WeatherData? weatherData)
+    {
+        weatherData = FormatWrapper.GetDateFromInputFormat(InputWrapper.GetInput());
         return weatherData != null;
+    }
+
+    private static bool IsValidateInput()
+    {
+        return InputWrapper.ValidateInput();
     }
 }

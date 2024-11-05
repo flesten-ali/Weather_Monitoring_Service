@@ -2,7 +2,7 @@
 
 public class Weather : WeatherBase
 {
-    public void UpdateWeatherState(WeatherData data)
+    public override void UpdateWeatherState(WeatherData data)
     {
         NotifyBots(data);
     }

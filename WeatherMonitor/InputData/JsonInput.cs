@@ -5,16 +5,24 @@ namespace WeatherMonitor.InputData;
 
 public class JsonInput : IInputData
 {
-    public WeatherData? ParseDate(string input)
+    private readonly IPrint _printer;
+
+    public JsonInput(IPrint print)
+    {
+        _printer = print;
+
+    }
+
+    public WeatherData? ParseData(string input)
     {
         WeatherData? weatherData = null;
         try
         {
             weatherData = JsonSerializer.Deserialize<WeatherData>(input);
         }
-        catch
+        catch 
         {
-            Print.Log("Invalid Json Format");
+            throw new FormatException("Invalid Json Format");
         }
         return weatherData;
     }
